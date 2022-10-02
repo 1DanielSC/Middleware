@@ -1,5 +1,4 @@
 import server.ServerRequestHandler;
-import server.interfaces.Broker;
 
 public class WinterMiddleware {
 
@@ -9,10 +8,10 @@ public class WinterMiddleware {
 	
 	public void addMethod(Object obj) {
 		Class<?> clazz = obj.getClass();
+		
 	}
 	
 	public WinterMiddleware(int port) {
-		
 		
 		this.start(port);
 	}

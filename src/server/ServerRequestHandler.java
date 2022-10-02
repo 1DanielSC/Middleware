@@ -5,10 +5,12 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import network.RequestHandler;
-import server.interfaces.Broker;
 
 public class ServerRequestHandler {
+    
     public ServerSocket socket;
+
+    public Invoker invoker;
 
     public ServerRequestHandler(int port){
         this.connect(port);
@@ -16,7 +18,7 @@ public class ServerRequestHandler {
         try {
             while (true) {
                 Socket clientSocket = this.socket.accept();
-                new Thread(new RequestHandler(clientSocket)).start();
+                new Thread(new RequestHandler(clientSocket, invoker)).start();
             }
 
         } catch (Exception e) {
