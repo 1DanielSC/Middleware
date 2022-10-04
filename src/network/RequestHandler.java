@@ -34,14 +34,14 @@ public class RequestHandler implements HTTPHandler, Runnable{
     @Override
     public void run(){
     	
-    	JsonObject messageReceived = receiveRequest(); //receber dados
+    	HTTPMessage messageReceived = receiveRequest(); //receber dados
     	
         JsonObject serverReply = invoke(messageReceived); //call the invoker --
 
         sendResponse(serverReply); //enviar dados
     }
 
-    public JsonObject invoke(JsonObject message){ //call the invoker to invoke the appropriate remote object
+    public JsonObject invoke(HTTPMessage message){ //call the invoker to invoke the appropriate remote object
 
         //get parameters from the marshaller
         //invoke appropriate class
@@ -49,7 +49,7 @@ public class RequestHandler implements HTTPHandler, Runnable{
         return null;
     }
 
-    public JsonObject receiveRequest(){
+    public HTTPMessage receiveRequest(){
         try  {
             in = new BufferedReader( new InputStreamReader( socket.getInputStream() ) );
 
@@ -70,7 +70,7 @@ public class RequestHandler implements HTTPHandler, Runnable{
             JsonObject jsonObj = marshaller.deserialize(httpBody);
             httpRequest.setBody(jsonObj);
 
-            return jsonObj; 
+            return httpRequest; 
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -104,6 +104,7 @@ public class RequestHandler implements HTTPHandler, Runnable{
 			try {
 				if(out != null) out.close();
 				if(client != null) client.close();
+                if(socket != null) socket.close(); //TODO: check this
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
