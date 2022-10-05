@@ -1,7 +1,9 @@
 package broker;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import com.google.gson.JsonObject;
 
@@ -32,48 +34,47 @@ public class Invoker {
 
 	public JsonObject invoke(HTTPMessage msg){
 		String httpMethod = msg.getMethod();
-		String resource = msg.getResource(); //TODO: get class route from resource
+		String resource = msg.getResource();
 
-		Class<?> clazz = map.get(resource); //TODO: change resource to the route from RequestMapping of class
+		String[] routes = resource.split("/");
+		String classRoute = "/" + routes[0];
+		String methodRoute = resource.replace(classRoute, "");
+
+		Class<?> clazz = map.get(classRoute);
 		JsonObject result = null;
 		try {
 			for (Method method : clazz.getDeclaredMethods()) {
 
-				if(method.isAnnotationPresent(GetMapping.class)){
+				if(method.isAnnotationPresent(GetMapping.class) && httpMethod.equals("GET")){
 					GetMapping getAnnotation = method.getAnnotation(GetMapping.class);
-					if(getAnnotation.route().equals(resource)){
+					if(getAnnotation.route().equals(methodRoute)){
 						result = (JsonObject) method.invoke(clazz);
 					}
 				}
-
-				else if(method.isAnnotationPresent(PostMapping.class)){
+				else if(method.isAnnotationPresent(PostMapping.class) && httpMethod.equals("POST")){
 					PostMapping getAnnotation = method.getAnnotation(PostMapping.class);
-					if(getAnnotation.route().equals(resource)){
+					if(getAnnotation.route().equals(methodRoute)){
 						result = (JsonObject) method.invoke(clazz);
 					}
 				}
-
-				else if(method.isAnnotationPresent(PutMapping.class)){
+				else if(method.isAnnotationPresent(PutMapping.class) && httpMethod.equals("PUT")){
 					PutMapping getAnnotation = method.getAnnotation(PutMapping.class);
-					if(getAnnotation.route().equals(resource)){
+					if(getAnnotation.route().equals(methodRoute)){
 						result = (JsonObject) method.invoke(clazz);
 					}
 				}
-
-				else if(method.isAnnotationPresent(DeleteMapping.class)){
+				else if(method.isAnnotationPresent(DeleteMapping.class) && httpMethod.equals("DELETE")){
 					DeleteMapping getAnnotation = method.getAnnotation(DeleteMapping.class);
-					if(getAnnotation.route().equals(resource)){
+					if(getAnnotation.route().equals(methodRoute)){
 						result = (JsonObject) method.invoke(clazz);
 					}
 				}
-
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		
 		return result;
 	}
 	
+
 }
