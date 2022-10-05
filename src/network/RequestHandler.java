@@ -8,11 +8,11 @@ import java.util.StringTokenizer;
 
 import com.google.gson.JsonObject;
 
+import broker.Invoker;
+import broker.Marshaller;
+import broker.interfaces.IMarshaller;
 import message.HTTPMessage;
 import network.interfaces.HTTPHandler;
-import server.Invoker;
-import server.Marshaller;
-import server.interfaces.IMarshaller;
 
 public class RequestHandler implements HTTPHandler, Runnable{
 
@@ -25,10 +25,10 @@ public class RequestHandler implements HTTPHandler, Runnable{
     private BufferedReader in;
     private DataOutputStream out;
 
-    public RequestHandler(Socket socket, Invoker invoker){
+    public RequestHandler(Socket socket, Invoker invoker, IMarshaller marshaller){
         this.socket = socket;
         this.invoker = invoker;
-        this.marshaller = new Marshaller();
+        this.marshaller = marshaller;
     }
 
     @Override
@@ -36,18 +36,11 @@ public class RequestHandler implements HTTPHandler, Runnable{
     	
     	HTTPMessage messageReceived = receiveRequest(); //receber dados
     	
-        JsonObject serverReply = invoke(messageReceived); //call the invoker --
-
+        JsonObject serverReply = invoker.invoke(messageReceived);
+        
         sendResponse(serverReply); //enviar dados
     }
 
-    public JsonObject invoke(HTTPMessage message){ //call the invoker to invoke the appropriate remote object
-
-        //get parameters from the marshaller
-        //invoke appropriate class
-
-        return null;
-    }
 
     public HTTPMessage receiveRequest(){
         try  {
@@ -64,7 +57,7 @@ public class RequestHandler implements HTTPHandler, Runnable{
             String httpBody = in.readLine();
 
             HTTPMessage httpRequest = new HTTPMessage();
-            httpRequest.setVerb(httpMethod);
+            httpRequest.setMethod(httpMethod);
             httpRequest.setResource(httpResource);
 
             JsonObject jsonObj = marshaller.deserialize(httpBody);

@@ -1,28 +1,35 @@
-import server.ServerRequestHandler;
+import broker.Invoker;
+import broker.Marshaller;
+import broker.ServerRequestHandler;
+import broker.interfaces.IMarshaller;
 
 public class WinterMiddleware {
 
 	public ServerRequestHandler requestHandler;
 	
-	
+	public Invoker invoker;
+
+	public IMarshaller marshaller;
 	
 	public void addMethod(Object obj) {
-		Class<?> clazz = obj.getClass();
-		
+		invoker.registerService(obj);
 	}
 	
-	public WinterMiddleware(int port) {
-		
-		this.start(port);
+	public WinterMiddleware() {
+		this.invoker = new Invoker();
+		this.marshaller = new Marshaller();
 	}
 	
 	public void start(int port) {
-		this.requestHandler = new ServerRequestHandler(port);
+		this.requestHandler = new ServerRequestHandler(port, invoker, marshaller);
 	}
 	
 	public static void main(String[] args) {
-		new WinterMiddleware(Integer.parseInt(args[0]));
+		WinterMiddleware inter = new WinterMiddleware();
 
+		inter.addMethod(inter);
+
+		inter.start(Integer.parseInt(args[0]));
 	}
 
 }

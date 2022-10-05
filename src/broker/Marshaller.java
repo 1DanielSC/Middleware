@@ -1,10 +1,10 @@
-package server;
+package broker;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import server.interfaces.IMarshaller;
+import broker.interfaces.IMarshaller;
 
 public class Marshaller implements IMarshaller{
     public byte[] serialize(JsonObject message){

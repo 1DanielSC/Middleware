@@ -3,16 +3,16 @@ package message;
 import com.google.gson.JsonObject;
 
 public class HTTPMessage {
-	public String verb;
+	public String method;
 	public String resource;
 	public JsonObject body;
 	
 	
-	public String getVerb() {
-		return verb;
+	public String getMethod() {
+		return method;
 	}
-	public void setVerb(String verb) {
-		this.verb = verb;
+	public void setMethod(String method) {
+		this.method = method;
 	}
 	public String getResource() {
 		return resource;

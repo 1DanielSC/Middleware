@@ -1,4 +1,4 @@
-package server.interfaces;
+package broker.interfaces;
 
 import com.google.gson.JsonObject;
 
