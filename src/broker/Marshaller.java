@@ -8,7 +8,7 @@ import broker.interfaces.IMarshaller;
 
 public class Marshaller implements IMarshaller{
     public byte[] serialize(JsonObject message){
-        return message.getAsString().getBytes();
+        return message.toString().getBytes();
     }
 
     public JsonObject deserialize(String body){
