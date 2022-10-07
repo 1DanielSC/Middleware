@@ -1,3 +1,4 @@
+import application.Buy;
 import broker.Invoker;
 import broker.Marshaller;
 import broker.ServerRequestHandler;
@@ -27,7 +28,9 @@ public class WinterMiddleware {
 	public static void main(String[] args) {
 		WinterMiddleware inter = new WinterMiddleware();
 
-		inter.addMethod(inter);
+		Buy buyClass = new Buy();
+		
+		inter.addMethod(buyClass);
 
 		inter.start(Integer.parseInt(args[0]));
 	}

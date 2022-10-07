@@ -3,6 +3,7 @@ package network;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.StringTokenizer;
 
@@ -35,8 +36,10 @@ public class RequestHandler implements HTTPHandler, Runnable{
     	
     	HTTPMessage messageReceived = receiveRequest(); //receber dados
     	
-        JsonObject serverReply = invoker.invoke(messageReceived);
-        
+        JsonObject serverReply = invoker.invoke(messageReceived); //invocar objeto remoto
+
+        System.out.println("resultado: " + serverReply.toString());
+
         sendResponse(serverReply); //enviar dados
     }
 
@@ -51,13 +54,15 @@ public class RequestHandler implements HTTPHandler, Runnable{
 			String httpMethod = tokenizer.nextToken();
             String httpResource = tokenizer.nextToken();
 
-			while(in.readLine() != "\n"){ } //ignore http headers
-
+            for(int i = 0; i < 6; i++){
+                in.readLine();
+            }
+            
             String httpBody = in.readLine();
 
             HTTPMessage httpRequest = new HTTPMessage();
-            httpRequest.setMethod(httpMethod);
-            httpRequest.setResource(httpResource);
+            httpRequest.setMethod(httpMethod.trim());
+            httpRequest.setResource(httpResource.trim());
 
             JsonObject jsonObj = marshaller.deserialize(httpBody);
             httpRequest.setBody(jsonObj);
@@ -72,15 +77,15 @@ public class RequestHandler implements HTTPHandler, Runnable{
 
 
     public void sendResponse(JsonObject replyMessage){
-        Socket client = null;
         try {
-            client = new Socket("localhost", socket.getPort());
-            out = new DataOutputStream(client.getOutputStream());
+            System.out.println("Enviando pra porta: " + socket.getPort());
 
-            String headerLine = "HTTP/1.0 200 OK \r\n";
+            out = new DataOutputStream(socket.getOutputStream());
+
+            String headerLine = "HTTP/1.1 200 OK" + "\r\n";
             String httpHeaders = "\r\n";
             String emptyLine="\r\n";
-            
+
             byte[] replyMessageSerialized = marshaller.serialize(replyMessage);
 
             out.writeBytes(headerLine);
@@ -95,7 +100,6 @@ public class RequestHandler implements HTTPHandler, Runnable{
         }finally{
 			try {
 				if(out != null) out.close();
-				if(client != null) client.close();
                 if(socket != null) socket.close(); //TODO: check this
 			} catch (Exception e2) {
 				e2.printStackTrace();
