@@ -28,7 +28,9 @@ public class ServerRequestHandler {
 
     public void connect(int port){
         try {
+            System.out.println("Starting Middleware on port " + port);
             this.socket = new ServerSocket(port);
+            System.out.println("Succesfully started Middleware on port " + port);
         } catch (IOException e) {
             e.printStackTrace();
         }
