@@ -3,7 +3,6 @@ package network;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.util.StringTokenizer;
 
@@ -22,9 +21,6 @@ public class RequestHandler implements HTTPHandler, Runnable{
 
     public IMarshaller marshaller;
 
-    private BufferedReader in;
-    private DataOutputStream out;
-
     public RequestHandler(Socket socket, Invoker invoker, IMarshaller marshaller){
         this.socket = socket;
         this.invoker = invoker;
@@ -38,15 +34,13 @@ public class RequestHandler implements HTTPHandler, Runnable{
     	
         JsonObject serverReply = invoker.invoke(messageReceived); //invocar objeto remoto
 
-        System.out.println("resultado: " + serverReply.toString());
-
         sendResponse(serverReply); //enviar dados
     }
 
 
     public HTTPMessage receiveRequest(){
         try  {
-            in = new BufferedReader( new InputStreamReader( socket.getInputStream() ) );
+            BufferedReader in = new BufferedReader( new InputStreamReader( this.socket.getInputStream() ) );
 
 			String headerLine = in.readLine();
 			StringTokenizer tokenizer = new StringTokenizer(headerLine);
@@ -77,17 +71,31 @@ public class RequestHandler implements HTTPHandler, Runnable{
 
 
     public void sendResponse(JsonObject replyMessage){
+        DataOutputStream out = null;
         try {
-            System.out.println("Enviando pra porta: " + socket.getPort());
+            System.out.println("Enviando para a porta: " + socket.getPort());
 
-            out = new DataOutputStream(socket.getOutputStream());
-
+            out = new DataOutputStream(this.socket.getOutputStream());
+            
             String headerLine = "HTTP/1.1 200 OK" + "\r\n";
             String httpHeaders = "\r\n";
             String emptyLine="\r\n";
 
             byte[] replyMessageSerialized = marshaller.serialize(replyMessage);
 
+            if(socket.isOutputShutdown()){
+                System.out.println("out was Shutdown");
+            }
+
+            if(!socket.isOutputShutdown()){
+                System.out.println("O out nao esta fechado");
+            }
+
+            if(socket.isClosed()){
+                System.out.println("socket closed");
+            }
+
+            
             out.writeBytes(headerLine);
             out.writeBytes(httpHeaders);
             out.writeBytes(emptyLine);
@@ -95,12 +103,33 @@ public class RequestHandler implements HTTPHandler, Runnable{
 
             out.flush();
             out.close();
+
+            System.out.println("oi");
+
         } catch (Exception e) {
+
+            if(socket.isClosed()){
+                System.out.println("socket closed2");
+            }
+
+            if(!socket.isOutputShutdown()){
+                System.out.println("O out nao esta fechado2");
+            }
+
+            if(socket.isOutputShutdown()){
+                System.out.println("out was Shutdown2");
+            }
+
+            if(socket.isConnected() && socket.isBound()){
+                System.out.println("socket conectado");
+            }
+
+
             e.printStackTrace();
         }finally{
 			try {
 				if(out != null) out.close();
-                if(socket != null) socket.close(); //TODO: check this
+                if(this.socket != null) this.socket.close();
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}

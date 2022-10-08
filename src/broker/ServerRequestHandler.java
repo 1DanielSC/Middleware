@@ -2,7 +2,9 @@ package broker;
 
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import broker.interfaces.IMarshaller;
 import network.RequestHandler;
@@ -11,14 +13,16 @@ public class ServerRequestHandler {
     
     public ServerSocket socket;
 
+    public ExecutorService threadExecutor;
 
     public ServerRequestHandler(int port, Invoker invoker, IMarshaller marshaller){
         this.connect(port);
 
+        this.threadExecutor = Executors.newFixedThreadPool(30);
+
         try {
             while (true) {
-                Socket clientSocket = this.socket.accept();
-                new Thread(new RequestHandler(clientSocket, invoker, marshaller)).start();
+                threadExecutor.execute(new RequestHandler(this.socket.accept(), invoker, marshaller));
             }
 
         } catch (Exception e) {
