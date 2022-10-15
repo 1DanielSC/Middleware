@@ -1,9 +1,17 @@
 package exceptions;
 
-public abstract class RemotingError {
+public abstract class RemotingError extends Throwable {
 
     public String error;
     public int code;
+
+    public RemotingError(){
+
+    }
+
+    public RemotingError(String errorMessage){
+        this.error = errorMessage;
+    }
 
     public String getError() {
         return error;
