@@ -52,8 +52,6 @@ public class RequestHandler implements HTTPHandler, Runnable{
             sendResponse(reply); //enviar dados
         } catch (RemotingError e) {
 
-            System.out.println("Erro: " + e.getError() + " " + e.getCode());
-
             HTTPMessage httpErrorMessage = new HTTPMessage();
             httpErrorMessage.setStatusCode(e.getCode());
             httpErrorMessage.setErrorMessage(e.getError());
@@ -104,8 +102,9 @@ public class RequestHandler implements HTTPHandler, Runnable{
 
             out = new DataOutputStream(this.socket.getOutputStream());
             
-            //String headerLine = "HTTP/1.1 200 OK" + "\r\n";
-            String headerLine = "HTTP/1.1 " + replyMessage.getStatusCode() + " " + replyMessage.getErrorMessage() + "\r\n";
+            String headerLine = "HTTP/1.1 " 
+                + replyMessage.getStatusCode() + " " 
+                + replyMessage.getErrorMessage() + "\r\n";
 
             String httpHeaders = "\r\n";
             String emptyLine="\r\n";
