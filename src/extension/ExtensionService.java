@@ -22,7 +22,7 @@ public class ExtensionService {
                 for (Class<?> service : services) {
                     for (Method method : service.getMethods()) {
                         if(method.getName().equals("verifyBefore")){
-                            method.invoke(service.getConstructor(null).newInstance(), informationContext);
+                            method.invoke(service.getConstructor().newInstance(), informationContext);
                         }
                     }
                 }
@@ -38,7 +38,7 @@ public class ExtensionService {
                 for (Class<?> service : services) {
                     for (Method method : service.getMethods()) {
                         if(method.getName().equals("verifyAfter")){
-                            method.invoke(service.getConstructor(null).newInstance(), msg, informationContext);
+                            method.invoke(service.getConstructor().newInstance(), msg, informationContext);
                         }
                     }
                 }
