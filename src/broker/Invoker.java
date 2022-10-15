@@ -10,6 +10,7 @@ import annotations.GetMapping;
 import annotations.PostMapping;
 import annotations.PutMapping;
 import annotations.RequestMapping;
+import exceptions.NotFoundError;
 import message.HTTPMessage;
 
 public class Invoker {
@@ -30,7 +31,7 @@ public class Invoker {
 		}
 	}
 
-	public JsonObject invoke(HTTPMessage msg){
+	public JsonObject invoke(HTTPMessage msg) throws NotFoundError{
 		String httpMethod = msg.getMethod();
 		String resource = msg.getResource();
 
@@ -71,6 +72,10 @@ public class Invoker {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+
+		if(result == null){
+			throw new NotFoundError();
 		}
 
 		return result;

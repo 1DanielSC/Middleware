@@ -1,10 +1,9 @@
 package network.interfaces;
 
-import com.google.gson.JsonObject;
-
+import exceptions.RemotingError;
 import message.HTTPMessage;
 
 public interface HTTPHandler {
-    public void sendResponse(JsonObject replyMessage);
-    public HTTPMessage receiveRequest();
+    public void sendResponse(HTTPMessage replyMessage);
+    public HTTPMessage receiveRequest() throws RemotingError;
 }

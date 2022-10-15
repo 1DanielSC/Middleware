@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 
 import broker.Invoker;
 import broker.interfaces.IMarshaller;
+import exceptions.RemotingError;
 import extension.ExtensionService;
 import message.HTTPMessage;
 import network.interfaces.HTTPHandler;
@@ -33,20 +34,36 @@ public class RequestHandler implements HTTPHandler, Runnable{
 
     @Override
     public void run(){
-    	
-    	HTTPMessage messageReceived = receiveRequest(); //receber dados
-    	
-        extension.verifyBefore(messageReceived);
+    	try {
+            
+            HTTPMessage messageReceived = receiveRequest(); //receber dados
+            
+            extension.verifyBefore(messageReceived);
+    
+            JsonObject serverReply = invoker.invoke(messageReceived); //invocar objeto remoto
+    
+            extension.verifyAfter(messageReceived, serverReply);
+    
+            HTTPMessage reply = new HTTPMessage();
+            reply.setBody(serverReply);
+            reply.setStatusCode(200);
+            reply.setErrorMessage("OK");
 
-        JsonObject serverReply = invoker.invoke(messageReceived); //invocar objeto remoto
+            sendResponse(reply); //enviar dados
+        } catch (RemotingError e) {
 
-        extension.verifyAfter(messageReceived, serverReply);
+            System.out.println("Erro: " + e.getError() + " " + e.getCode());
 
-        sendResponse(serverReply); //enviar dados
+            HTTPMessage httpErrorMessage = new HTTPMessage();
+            httpErrorMessage.setStatusCode(e.getCode());
+            httpErrorMessage.setErrorMessage(e.getError());
+
+            sendResponse(httpErrorMessage);
+        }
     }
 
 
-    public HTTPMessage receiveRequest(){
+    public HTTPMessage receiveRequest() throws RemotingError{
         try  {
             BufferedReader in = new BufferedReader( new InputStreamReader( this.socket.getInputStream() ) );
 
@@ -73,23 +90,31 @@ public class RequestHandler implements HTTPHandler, Runnable{
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		} catch(RemotingError e){
+            throw e;
+        }
         return null;
     }
 
 
-    public void sendResponse(JsonObject replyMessage){
+    public void sendResponse(HTTPMessage replyMessage){
         DataOutputStream out = null;
         try {
             System.out.println("Enviando para a porta: " + socket.getPort());
 
             out = new DataOutputStream(this.socket.getOutputStream());
             
-            String headerLine = "HTTP/1.1 200 OK" + "\r\n";
+            //String headerLine = "HTTP/1.1 200 OK" + "\r\n";
+            String headerLine = "HTTP/1.1 " + replyMessage.getStatusCode() + " " + replyMessage.getErrorMessage() + "\r\n";
+
             String httpHeaders = "\r\n";
             String emptyLine="\r\n";
 
-            byte[] replyMessageSerialized = marshaller.serialize(replyMessage);
+            byte[] replyMessageSerialized = null;
+
+            if(replyMessage.getBody() != null)
+                replyMessageSerialized = marshaller.serialize(replyMessage.getBody());
+
 
             if(socket.isOutputShutdown()){
                 System.out.println("out was Shutdown");
