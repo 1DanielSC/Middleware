@@ -7,6 +7,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import broker.interfaces.IMarshaller;
+import extension.ExtensionService;
 import network.RequestHandler;
 
 public class ServerRequestHandler {
@@ -19,10 +20,12 @@ public class ServerRequestHandler {
         this.connect(port);
 
         this.threadExecutor = Executors.newFixedThreadPool(30);
+        
+        ExtensionService extensionService = new ExtensionService();
 
         try {
             while (true) {
-                threadExecutor.execute(new RequestHandler(this.socket.accept(), invoker, marshaller));
+                threadExecutor.execute(new RequestHandler(this.socket.accept(), invoker, marshaller, extensionService));
             }
 
         } catch (Exception e) {

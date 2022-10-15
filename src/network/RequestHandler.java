@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 
 import broker.Invoker;
 import broker.interfaces.IMarshaller;
+import extension.ExtensionService;
 import message.HTTPMessage;
 import network.interfaces.HTTPHandler;
 
@@ -21,10 +22,13 @@ public class RequestHandler implements HTTPHandler, Runnable{
 
     public IMarshaller marshaller;
 
-    public RequestHandler(Socket socket, Invoker invoker, IMarshaller marshaller){
+    public ExtensionService extension;
+
+    public RequestHandler(Socket socket, Invoker invoker, IMarshaller marshaller, ExtensionService extensionService){
         this.socket = socket;
         this.invoker = invoker;
         this.marshaller = marshaller;
+        this.extension = extensionService;
     }
 
     @Override
@@ -32,7 +36,11 @@ public class RequestHandler implements HTTPHandler, Runnable{
     	
     	HTTPMessage messageReceived = receiveRequest(); //receber dados
     	
+        extension.verifyBefore(messageReceived);
+
         JsonObject serverReply = invoker.invoke(messageReceived); //invocar objeto remoto
+
+        extension.verifyAfter(messageReceived, serverReply);
 
         sendResponse(serverReply); //enviar dados
     }
