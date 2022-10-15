@@ -11,20 +11,19 @@ import message.HTTPMessage;
 
 public class LoggingService {
     
-    public void verifyAfter(HTTPMessage msg, Object informationContext) {
-        JsonObject result = (JsonObject) informationContext;
+    public void verifyAfter(HTTPMessage msg) {
         try {
-            saveOnFile(msg, result);
+            saveOnFile(msg);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void saveOnFile(HTTPMessage msg, JsonObject result) throws IOException{
+    public void saveOnFile(HTTPMessage msg) throws IOException{
         FileWriter writer = new FileWriter("MiddlewareLogging.txt", true);
 
         writer.write("Requested route: (" + msg.getMethod() + ") " + msg.getResource()+"\n");
-        writer.write("Operation result: " + result.toString()+"\n");
+        writer.write("Operation result: " + msg.getBody().toString()+"\n");
         writer.write("Ended on: " + getDateAndTime()+"\n");
 
         writer.write("\n");

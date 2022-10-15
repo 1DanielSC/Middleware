@@ -31,7 +31,7 @@ public class Invoker {
 		}
 	}
 
-	public JsonObject invoke(HTTPMessage msg) throws NotFoundError{
+	public HTTPMessage invoke(HTTPMessage msg) throws NotFoundError{
 		String httpMethod = msg.getMethod();
 		String resource = msg.getResource();
 
@@ -77,8 +77,15 @@ public class Invoker {
 		if(result == null){
 			throw new NotFoundError();
 		}
+		
+		HTTPMessage reply = new HTTPMessage();
+		reply.setMethod(msg.getMethod());
+		reply.setResource(msg.getResource());
+        reply.setBody(result);
+        reply.setStatusCode(200);
+        reply.setErrorMessage("OK");
 
-		return result;
+		return reply;
 	}
 	
 

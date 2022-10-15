@@ -32,13 +32,13 @@ public class ExtensionService {
         }
     }
 
-    public void verifyAfter(HTTPMessage msg, Object informationContext){
+    public void verifyAfter(HTTPMessage informationContext){
         try {
             if(services.size() > 0){
                 for (Class<?> service : services) {
                     for (Method method : service.getMethods()) {
                         if(method.getName().equals("verifyAfter")){
-                            method.invoke(service.getConstructor().newInstance(), msg, informationContext);
+                            method.invoke(service.getConstructor().newInstance(), informationContext);
                         }
                     }
                 }

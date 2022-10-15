@@ -40,16 +40,12 @@ public class RequestHandler implements HTTPHandler, Runnable{
             
             extension.verifyBefore(messageReceived);
     
-            JsonObject serverReply = invoker.invoke(messageReceived); //invocar objeto remoto
+            HTTPMessage serverReply = invoker.invoke(messageReceived); //invocar objeto remoto
     
-            extension.verifyAfter(messageReceived, serverReply);
+            extension.verifyAfter(serverReply);
     
-            HTTPMessage reply = new HTTPMessage();
-            reply.setBody(serverReply);
-            reply.setStatusCode(200);
-            reply.setErrorMessage("OK");
+            sendResponse(serverReply); //enviar dados
 
-            sendResponse(reply); //enviar dados
         } catch (RemotingError e) {
 
             HTTPMessage httpErrorMessage = new HTTPMessage();
