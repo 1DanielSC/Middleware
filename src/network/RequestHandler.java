@@ -34,9 +34,10 @@ public class RequestHandler implements HTTPHandler, Runnable{
 
     @Override
     public void run(){
+        HTTPMessage messageReceived = null;
+
     	try {
-            
-            HTTPMessage messageReceived = receiveRequest(); //receber dados
+            messageReceived = receiveRequest(); //receber dados
             
             extension.verifyBefore(messageReceived);
     
@@ -51,6 +52,13 @@ public class RequestHandler implements HTTPHandler, Runnable{
             HTTPMessage httpErrorMessage = new HTTPMessage();
             httpErrorMessage.setStatusCode(e.getCode());
             httpErrorMessage.setErrorMessage(e.getError());
+
+            if(messageReceived != null){
+                httpErrorMessage.setMethod(messageReceived.getMethod());
+                httpErrorMessage.setResource(messageReceived.getResource());
+            }
+
+            extension.verifyAfter(httpErrorMessage);
 
             sendResponse(httpErrorMessage);
         }
@@ -110,20 +118,6 @@ public class RequestHandler implements HTTPHandler, Runnable{
             if(replyMessage.getBody() != null)
                 replyMessageSerialized = marshaller.serialize(replyMessage.getBody());
 
-
-            if(socket.isOutputShutdown()){
-                System.out.println("out was Shutdown");
-            }
-
-            if(!socket.isOutputShutdown()){
-                System.out.println("O out nao esta fechado");
-            }
-
-            if(socket.isClosed()){
-                System.out.println("socket closed");
-            }
-
-            
             out.writeBytes(headerLine);
             out.writeBytes(httpHeaders);
             out.writeBytes(emptyLine);
@@ -133,25 +127,8 @@ public class RequestHandler implements HTTPHandler, Runnable{
             out.close();
 
         } catch (Exception e) {
-
-            if(socket.isClosed()){
-                System.out.println("socket closed2");
-            }
-
-            if(!socket.isOutputShutdown()){
-                System.out.println("O out nao esta fechado2");
-            }
-
-            if(socket.isOutputShutdown()){
-                System.out.println("out was Shutdown2");
-            }
-
-            if(socket.isConnected() && socket.isBound()){
-                System.out.println("socket conectado");
-            }
-
-
             e.printStackTrace();
+
         }finally{
 			try {
 				if(out != null) out.close();
