@@ -21,9 +21,12 @@ public class LoggingService {
         FileWriter writer = new FileWriter("MiddlewareLogging.txt", true);
 
         writer.write("Requested route: (" + msg.getMethod() + ") " + msg.getResource()+"\n");
-        writer.write("Operation result: " + msg.getBody().toString()+"\n");
-        writer.write("Ended on: " + getDateAndTime()+"\n");
-
+        writer.write("Status: " + msg.getStatusCode() + " " + msg.getErrorMessage() + "\n");
+        if(msg.getBody() != null){
+            writer.write("Result: " + msg.getBody().toString()+"\n");
+        }
+        writer.write("Finished at: " + getDateAndTime()+"\n");
+        
         writer.write("\n");
         writer.close();
     }
