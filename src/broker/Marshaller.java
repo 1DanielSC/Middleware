@@ -14,13 +14,17 @@ public class Marshaller implements IMarshaller{
     }
 
     public JsonObject deserialize(String body) throws RemotingError{
+        if(body == null || body.equals("") ){
+            return null;
+        }
+        
         try {
-
             JsonElement jsonElement = JsonParser.parseString(body);
             JsonObject jsonObject = jsonElement.getAsJsonObject();
             return jsonObject;
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new BadRequestError();
         }
     }
