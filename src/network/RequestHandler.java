@@ -132,8 +132,6 @@ public class RequestHandler implements HTTPHandler, Runnable{
             out.flush();
             out.close();
 
-            System.out.println("oi");
-
         } catch (Exception e) {
 
             if(socket.isClosed()){

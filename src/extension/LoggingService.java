@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import com.google.gson.JsonObject;
-
 import message.HTTPMessage;
 
 public class LoggingService {
