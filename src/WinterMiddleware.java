@@ -21,7 +21,7 @@ public class WinterMiddleware {
 		this.marshaller = new Marshaller();
 	}
 	
-	public void start(int port) {
+	public void start(int port, String networkProtocol) {
 		this.requestHandler = new ServerRequestHandler(port, invoker, marshaller);
 	}
 	
@@ -32,7 +32,7 @@ public class WinterMiddleware {
 		
 		inter.addMethod(buyClass);
 
-		inter.start(Integer.parseInt(args[0]));
+		inter.start(9000, args[0]);
 	}
 
 }
