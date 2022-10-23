@@ -69,7 +69,6 @@ public class UDPRequestHandler implements HTTPHandler, Runnable{
 			byte[] packetData = this.packetReceived.getData();
 			JsonObject packet = marshaller.deserialize(new String(packetData));
 
-
 			HTTPMessage msg = new HTTPMessage();	
 			msg.setMethod(packet.get("method").getAsString());
 			msg.setResource(packet.get("resource").getAsString());
@@ -78,7 +77,9 @@ public class UDPRequestHandler implements HTTPHandler, Runnable{
 			packet.remove("resource");
 
 			JsonObject bodyy = marshaller.deserialize(packet.toString().trim());
-			msg.setBody(bodyy.getAsJsonObject());
+			JsonObject insideBodyy = marshaller.deserialize(bodyy.get("body").toString().trim());
+
+			msg.setBody(insideBodyy.getAsJsonObject());
 
 			return msg;
 
