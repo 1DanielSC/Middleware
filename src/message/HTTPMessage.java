@@ -40,5 +40,10 @@ public class HTTPMessage {
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}
+	@Override
+	public String toString() {
+		return "HTTPMessage [method=" + method + ", resource=" + resource + ", body=" + body + ", statusCode="
+				+ statusCode + ", errorMessage=" + errorMessage + "]";
+	}
 	
 }

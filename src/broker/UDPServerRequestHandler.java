@@ -33,8 +33,9 @@ public class UDPServerRequestHandler implements IServerRequestHandler{
 			
 			while(true) {
 				byte[] packet = new byte[1024];
-				DatagramPacket receivedPacket = new DatagramPacket(packet,packet.length);
-				threadExecutor.execute(new UDPRequestHandler(receivedPacket, invoker, marshaller, extensionService));
+				DatagramPacket packetReceived = new DatagramPacket(packet,packet.length);
+				this.socket.receive(packetReceived);
+				threadExecutor.execute(new UDPRequestHandler(socket, packetReceived, invoker, new UdpMarshaller(), extensionService));
 			}
 		}
 		catch(Exception e) {
@@ -43,16 +44,13 @@ public class UDPServerRequestHandler implements IServerRequestHandler{
 	}
 	
 	
-	
-	
-	
-	
-	
 	public void connect(int port) {
 		try {
+			System.out.println("UDP - Starting Middleware on port " + port);
 			this.socket = new DatagramSocket(port);
+			System.out.println("UDP - Succesfully started Middleware on port " + port);
 		}catch(Exception e) {
-			
+			e.printStackTrace();
 		}
 	}
 }

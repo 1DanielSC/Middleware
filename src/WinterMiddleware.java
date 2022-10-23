@@ -2,11 +2,13 @@ import application.Buy;
 import broker.Invoker;
 import broker.Marshaller;
 import broker.ServerRequestHandler;
+import broker.UDPServerRequestHandler;
 import broker.interfaces.IMarshaller;
+import broker.interfaces.IServerRequestHandler;
 
 public class WinterMiddleware {
 
-	public ServerRequestHandler requestHandler;
+	public IServerRequestHandler requestHandler;
 	
 	public Invoker invoker;
 
@@ -22,7 +24,26 @@ public class WinterMiddleware {
 	}
 	
 	public void start(int port, String networkProtocol) {
-		this.requestHandler = new ServerRequestHandler(port, invoker, marshaller);
+
+		switch (networkProtocol) {
+			case "udp":
+				this.requestHandler = new UDPServerRequestHandler(port, invoker, marshaller);
+				break;
+
+			case "tcp":
+				this.requestHandler = new ServerRequestHandler(port, invoker, marshaller);
+				break;
+				
+			case "http":
+				this.requestHandler = new ServerRequestHandler(port, invoker, marshaller);
+				break;
+
+			default:
+				System.out.println("Incorrect network layer protocol");
+				System.exit(1);
+				break;
+		}
+		
 	}
 	
 	public static void main(String[] args) {

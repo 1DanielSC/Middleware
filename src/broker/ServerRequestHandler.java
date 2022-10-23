@@ -7,10 +7,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import broker.interfaces.IMarshaller;
+import broker.interfaces.IServerRequestHandler;
 import extension.ExtensionService;
 import network.RequestHandler;
 
-public class ServerRequestHandler {
+public class ServerRequestHandler implements IServerRequestHandler{
     
     public ServerSocket socket;
 
