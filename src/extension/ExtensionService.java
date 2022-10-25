@@ -13,9 +13,17 @@ public class ExtensionService {
     public ExtensionService(){
         this.services = new ArrayList<>();
         
-        this.services.add(LoggingService.class);
+        //this.services.add(LoggingService.class);
     }
 
+    public void addService(Class<?> clazz) {
+    	services.add(clazz);
+    }
+    
+    public void removeService(Class<?> clazz) {
+    	services.remove(clazz);
+    }
+    
     public void verifyBefore(Object informationContext){
         try {
             if(services.size() > 0){

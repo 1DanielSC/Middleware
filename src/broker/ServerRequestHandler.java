@@ -17,12 +17,12 @@ public class ServerRequestHandler implements IServerRequestHandler{
 
     public ExecutorService threadExecutor;
 
-    public ServerRequestHandler(int port, Invoker invoker, IMarshaller marshaller){
+    public ServerRequestHandler(int port, Invoker invoker, IMarshaller marshaller, ExtensionService extensionService){
         this.connect(port);
 
         this.threadExecutor = Executors.newFixedThreadPool(30);
         
-        ExtensionService extensionService = new ExtensionService();
+        //ExtensionService extensionService = new ExtensionService();
 
         try {
             while (true) {

@@ -20,14 +20,14 @@ public class UDPServerRequestHandler implements IServerRequestHandler{
 	
 	public Invoker invoker;
 	
-	public UDPServerRequestHandler(int port, Invoker invoker, IMarshaller marshaller) {
+	public UDPServerRequestHandler(int port, Invoker invoker, IMarshaller marshaller, ExtensionService extensionService) {
 		
 		this.connect(port);
 		
 		this.threadExecutor = Executors.newFixedThreadPool(30);
 		this.invoker = invoker;
 		this.marshaller = marshaller;
-		ExtensionService extensionService = new ExtensionService();
+		//ExtensionService extensionService = new ExtensionService();
 		
 		try {
 			
