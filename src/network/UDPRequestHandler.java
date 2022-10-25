@@ -43,7 +43,7 @@ public class UDPRequestHandler implements HTTPHandler, Runnable{
     		
     		HTTPMessage serverReply = invoker.invoke(messageReceived);
     		
-    		extension.verifyAfter(messageReceived);
+    		extension.verifyAfter(serverReply);
     		
     		this.sendResponse(serverReply);
     		
