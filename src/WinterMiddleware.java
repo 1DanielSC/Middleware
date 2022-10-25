@@ -3,7 +3,7 @@ import broker.Invoker;
 import broker.Marshaller;
 import broker.ServerRequestHandler;
 import broker.UDPServerRequestHandler;
-import broker.interfaces.IMarshaller;
+import broker.UdpMarshaller;
 import broker.interfaces.IServerRequestHandler;
 
 public class WinterMiddleware {
@@ -11,8 +11,6 @@ public class WinterMiddleware {
 	public IServerRequestHandler requestHandler;
 	
 	public Invoker invoker;
-
-	public IMarshaller marshaller;
 	
 	public void addMethod(Object obj) {
 		invoker.registerService(obj);
@@ -20,22 +18,21 @@ public class WinterMiddleware {
 	
 	public WinterMiddleware() {
 		this.invoker = new Invoker();
-		this.marshaller = new Marshaller();
 	}
 	
 	public void start(int port, String networkProtocol) {
 
 		switch (networkProtocol) {
 			case "udp":
-				this.requestHandler = new UDPServerRequestHandler(port, invoker, marshaller);
+				this.requestHandler = new UDPServerRequestHandler(port, invoker, new UdpMarshaller());
 				break;
 
 			case "tcp":
-				this.requestHandler = new ServerRequestHandler(port, invoker, marshaller);
+				this.requestHandler = new ServerRequestHandler(port, invoker, new Marshaller());
 				break;
 				
 			case "http":
-				this.requestHandler = new ServerRequestHandler(port, invoker, marshaller);
+				this.requestHandler = new ServerRequestHandler(port, invoker, new Marshaller());
 				break;
 
 			default:
