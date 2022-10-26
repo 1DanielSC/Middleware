@@ -23,7 +23,11 @@ public class WinterMiddleware {
 	public void addExtensionService(Class<?> clazz) {
 		extensionService.addService(clazz);
 	}
-	
+
+	public void activateLogging(){
+		this.extensionService.addService(LoggingService.class);
+	}
+
 	public WinterMiddleware() {
 		this.invoker = new Invoker();
 		this.extensionService = new ExtensionService();
@@ -59,11 +63,9 @@ public class WinterMiddleware {
 		
 		inter.addMethod(buyClass);
 		
-		//LoggingService a = new LoggingService();
-		
-		//inter.addExtensionService(a.getClass());
+		inter.activateLogging();
 
-		inter.start(9000, "tcp");
+		inter.start(9000, "udp");
 	}
 
 }
