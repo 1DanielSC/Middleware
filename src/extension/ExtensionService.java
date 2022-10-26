@@ -12,8 +12,6 @@ public class ExtensionService {
 
     public ExtensionService(){
         this.services = new ArrayList<>();
-        
-        //this.services.add(LoggingService.class);
     }
 
     public void addService(Class<?> clazz) {

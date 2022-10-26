@@ -1,10 +1,10 @@
 import application.Buy;
-import broker.Invoker;
-import broker.Marshaller;
-import broker.ServerRequestHandler;
-import broker.UDPServerRequestHandler;
-import broker.UdpMarshaller;
+import broker.TCP_ServerRequestHandler;
+import broker.UDP_ServerRequestHandler;
 import broker.interfaces.IServerRequestHandler;
+import broker.invoker.Invoker;
+import broker.marshallers.TCP_Marshaller;
+import broker.marshallers.UDP_Marshaller;
 import extension.ExtensionService;
 import extension.LoggingService;
 
@@ -37,15 +37,15 @@ public class WinterMiddleware {
 
 		switch (networkProtocol) {
 			case "udp":
-				this.requestHandler = new UDPServerRequestHandler(port, invoker, new UdpMarshaller(), extensionService);
+				this.requestHandler = new UDP_ServerRequestHandler(port, invoker, new UDP_Marshaller(), extensionService);
 				break;
 
 			case "tcp":
-				this.requestHandler = new ServerRequestHandler(port, invoker, new Marshaller(), extensionService);
+				this.requestHandler = new TCP_ServerRequestHandler(port, invoker, new TCP_Marshaller(), extensionService);
 				break;
 				
 			case "http":
-				this.requestHandler = new ServerRequestHandler(port, invoker, new Marshaller(), extensionService);
+				this.requestHandler = new TCP_ServerRequestHandler(port, invoker, new TCP_Marshaller(), extensionService);
 				break;
 
 			default:

@@ -6,11 +6,12 @@ import java.util.concurrent.Executors;
 
 import broker.interfaces.IMarshaller;
 import broker.interfaces.IServerRequestHandler;
+import broker.invoker.Invoker;
 import extension.ExtensionService;
-import network.UDPRequestHandler;
+import network.UDP_RequestHandler;
 
 
-public class UDPServerRequestHandler implements IServerRequestHandler{
+public class UDP_ServerRequestHandler implements IServerRequestHandler{
 	
 	public DatagramSocket socket;
 	
@@ -20,14 +21,13 @@ public class UDPServerRequestHandler implements IServerRequestHandler{
 	
 	public Invoker invoker;
 	
-	public UDPServerRequestHandler(int port, Invoker invoker, IMarshaller marshaller, ExtensionService extensionService) {
+	public UDP_ServerRequestHandler(int port, Invoker invoker, IMarshaller marshaller, ExtensionService extensionService) {
 		
 		this.connect(port);
 		
 		this.threadExecutor = Executors.newFixedThreadPool(30);
 		this.invoker = invoker;
 		this.marshaller = marshaller;
-		//ExtensionService extensionService = new ExtensionService();
 		
 		try {
 			
@@ -35,7 +35,7 @@ public class UDPServerRequestHandler implements IServerRequestHandler{
 				byte[] packet = new byte[1024];
 				DatagramPacket packetReceived = new DatagramPacket(packet,packet.length);
 				this.socket.receive(packetReceived);
-				threadExecutor.execute(new UDPRequestHandler(socket, packetReceived, invoker, new UdpMarshaller(), extensionService));
+				threadExecutor.execute(new UDP_RequestHandler(socket, packetReceived, invoker, marshaller, extensionService));
 			}
 		}
 		catch(Exception e) {

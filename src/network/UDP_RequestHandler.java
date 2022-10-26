@@ -5,14 +5,14 @@ import java.net.DatagramSocket;
 
 import com.google.gson.JsonObject;
 
-import broker.Invoker;
 import broker.interfaces.IMarshaller;
+import broker.invoker.Invoker;
 import exceptions.RemotingError;
 import extension.ExtensionService;
 import message.HTTPMessage;
 import network.interfaces.HTTPHandler;
 
-public class UDPRequestHandler implements HTTPHandler, Runnable{
+public class UDP_RequestHandler implements HTTPHandler, Runnable{
 	
 	public DatagramSocket socket;
 
@@ -24,7 +24,7 @@ public class UDPRequestHandler implements HTTPHandler, Runnable{
 
     public ExtensionService extension;
     
-    public UDPRequestHandler(DatagramSocket socket, DatagramPacket packetReceived, Invoker invoker, IMarshaller marshaller, ExtensionService extensionService){
+    public UDP_RequestHandler(DatagramSocket socket, DatagramPacket packetReceived, Invoker invoker, IMarshaller marshaller, ExtensionService extensionService){
         this.socket = socket;
 		this.packetReceived = packetReceived;
         this.invoker = invoker;

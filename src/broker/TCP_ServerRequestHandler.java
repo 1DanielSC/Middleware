@@ -8,25 +8,24 @@ import java.util.concurrent.Executors;
 
 import broker.interfaces.IMarshaller;
 import broker.interfaces.IServerRequestHandler;
+import broker.invoker.Invoker;
 import extension.ExtensionService;
-import network.RequestHandler;
+import network.TCP_RequestHandler;
 
-public class ServerRequestHandler implements IServerRequestHandler{
+public class TCP_ServerRequestHandler implements IServerRequestHandler{
     
     public ServerSocket socket;
 
     public ExecutorService threadExecutor;
 
-    public ServerRequestHandler(int port, Invoker invoker, IMarshaller marshaller, ExtensionService extensionService){
+    public TCP_ServerRequestHandler(int port, Invoker invoker, IMarshaller marshaller, ExtensionService extensionService){
         this.connect(port);
 
         this.threadExecutor = Executors.newFixedThreadPool(30);
-        
-        //ExtensionService extensionService = new ExtensionService();
 
         try {
             while (true) {
-                threadExecutor.execute(new RequestHandler(this.socket.accept(), invoker, marshaller, extensionService));
+                threadExecutor.execute(new TCP_RequestHandler(this.socket.accept(), invoker, marshaller, extensionService));
             }
 
         } catch (Exception e) {

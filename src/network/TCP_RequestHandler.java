@@ -8,14 +8,14 @@ import java.util.StringTokenizer;
 
 import com.google.gson.JsonObject;
 
-import broker.Invoker;
 import broker.interfaces.IMarshaller;
+import broker.invoker.Invoker;
 import exceptions.RemotingError;
 import extension.ExtensionService;
 import message.HTTPMessage;
 import network.interfaces.HTTPHandler;
 
-public class RequestHandler implements HTTPHandler, Runnable{
+public class TCP_RequestHandler implements HTTPHandler, Runnable{
 
     public Socket socket;
     
@@ -25,7 +25,7 @@ public class RequestHandler implements HTTPHandler, Runnable{
 
     public ExtensionService extension;
 
-    public RequestHandler(Socket socket, Invoker invoker, IMarshaller marshaller, ExtensionService extensionService){
+    public TCP_RequestHandler(Socket socket, Invoker invoker, IMarshaller marshaller, ExtensionService extensionService){
         this.socket = socket;
         this.invoker = invoker;
         this.marshaller = marshaller;

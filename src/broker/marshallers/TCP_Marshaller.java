@@ -1,4 +1,4 @@
-package broker;
+package broker.marshallers;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -8,7 +8,7 @@ import broker.interfaces.IMarshaller;
 import exceptions.BadRequestError;
 import exceptions.RemotingError;
 
-public class Marshaller implements IMarshaller{
+public class TCP_Marshaller implements IMarshaller{
     public byte[] serialize(JsonObject message){
         return message.toString().getBytes();
     }
