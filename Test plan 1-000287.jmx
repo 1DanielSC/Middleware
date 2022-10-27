@@ -205,7 +205,7 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <kg.apc.jmeter.samplers.UDPSampler guiclass="kg.apc.jmeter.samplers.UDPSamplerGui" testclass="kg.apc.jmeter.samplers.UDPSampler" testname="jp@gc - UDP Request" enabled="true">
+        <kg.apc.jmeter.samplers.UDPSampler guiclass="kg.apc.jmeter.samplers.UDPSamplerGui" testclass="kg.apc.jmeter.samplers.UDPSampler" testname="jp@gc - UDP Request" enabled="false">
           <stringProp name="hostname">localhost</stringProp>
           <stringProp name="port">9050</stringProp>
           <boolProp name="waitresponse">true</boolProp>
@@ -384,7 +384,7 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <kg.apc.jmeter.samplers.UDPSampler guiclass="kg.apc.jmeter.samplers.UDPSamplerGui" testclass="kg.apc.jmeter.samplers.UDPSampler" testname="jp@gc - UDP Request" enabled="true">
+        <kg.apc.jmeter.samplers.UDPSampler guiclass="kg.apc.jmeter.samplers.UDPSamplerGui" testclass="kg.apc.jmeter.samplers.UDPSampler" testname="jp@gc - UDP Request" enabled="false">
           <stringProp name="hostname">localhost</stringProp>
           <stringProp name="port">9050</stringProp>
           <boolProp name="waitresponse">true</boolProp>
@@ -563,7 +563,7 @@
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
       </ThreadGroup>
       <hashTree>
-        <kg.apc.jmeter.samplers.UDPSampler guiclass="kg.apc.jmeter.samplers.UDPSamplerGui" testclass="kg.apc.jmeter.samplers.UDPSampler" testname="jp@gc - UDP Request" enabled="true">
+        <kg.apc.jmeter.samplers.UDPSampler guiclass="kg.apc.jmeter.samplers.UDPSamplerGui" testclass="kg.apc.jmeter.samplers.UDPSampler" testname="jp@gc - UDP Request" enabled="false">
           <stringProp name="hostname">localhost</stringProp>
           <stringProp name="port">9050</stringProp>
           <boolProp name="waitresponse">true</boolProp>
@@ -732,23 +732,23 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <intProp name="LoopController.loops">-1</intProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
-        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">false</boolProp>
       </ThreadGroup>
       <hashTree>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP Request" enabled="false">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP - Soma - GET" enabled="false">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">{&quot;valor&quot;:5}&#xd;
+                <stringProp name="Argument.value">{&quot;num1&quot;:5, &quot;num2&quot;: 2}&#xd;
 </stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -758,7 +758,34 @@
           <stringProp name="HTTPSampler.port">9000</stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">buy/add</stringProp>
+          <stringProp name="HTTPSampler.path">calc/somaa</stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout">100</stringProp>
+          <stringProp name="HTTPSampler.response_timeout">100</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP - Subtracao - POST" enabled="false">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;num1&quot;:5, &quot;num2&quot;: 0}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">localhost</stringProp>
+          <stringProp name="HTTPSampler.port">9000</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">calc/sub</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -769,13 +796,259 @@
           <stringProp name="HTTPSampler.response_timeout">100</stringProp>
         </HTTPSamplerProxy>
         <hashTree/>
-        <kg.apc.jmeter.samplers.UDPSampler guiclass="kg.apc.jmeter.samplers.UDPSamplerGui" testclass="kg.apc.jmeter.samplers.UDPSampler" testname="jp@gc - UDP Request" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP - Divisão - PUT" enabled="false">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;num1&quot;:5, &quot;num2&quot;: 0}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">localhost</stringProp>
+          <stringProp name="HTTPSampler.port">9000</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">calc/div</stringProp>
+          <stringProp name="HTTPSampler.method">PUT</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout">100</stringProp>
+          <stringProp name="HTTPSampler.response_timeout">100</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP - Multiplicação - PATCH" enabled="false">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;num1&quot;:5, &quot;num2&quot;: 2}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">localhost</stringProp>
+          <stringProp name="HTTPSampler.port">9000</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">calc/mult</stringProp>
+          <stringProp name="HTTPSampler.method">PATCH</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout">100</stringProp>
+          <stringProp name="HTTPSampler.response_timeout">100</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP - SomaMem - POST" enabled="false">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;num1&quot;:5}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">localhost</stringProp>
+          <stringProp name="HTTPSampler.port">9000</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">calc/somaMem</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout">100</stringProp>
+          <stringProp name="HTTPSampler.response_timeout">100</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP - SubtracaoMem - PUT" enabled="false">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;num1&quot;:5}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">localhost</stringProp>
+          <stringProp name="HTTPSampler.port">9000</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">calc/subMem</stringProp>
+          <stringProp name="HTTPSampler.method">PUT</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout">100</stringProp>
+          <stringProp name="HTTPSampler.response_timeout">100</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP - DivisãoMem - DELETE" enabled="false">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;num1&quot;:5}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">localhost</stringProp>
+          <stringProp name="HTTPSampler.port">9000</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">calc/divMem</stringProp>
+          <stringProp name="HTTPSampler.method">DELETE</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout">100</stringProp>
+          <stringProp name="HTTPSampler.response_timeout">100</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP - MultipĺicacaoMem - POST" enabled="false">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;num1&quot;:5}&#xd;
+</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">localhost</stringProp>
+          <stringProp name="HTTPSampler.port">9000</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path">calc/multMem</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout">100</stringProp>
+          <stringProp name="HTTPSampler.response_timeout">100</stringProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
+        <kg.apc.jmeter.samplers.UDPSampler guiclass="kg.apc.jmeter.samplers.UDPSamplerGui" testclass="kg.apc.jmeter.samplers.UDPSampler" testname="UDP - Soma - GET" enabled="false">
           <stringProp name="hostname">localhost</stringProp>
           <stringProp name="port">9000</stringProp>
           <boolProp name="waitresponse">true</boolProp>
           <boolProp name="closechannel">false</boolProp>
           <stringProp name="timeout">1000</stringProp>
-          <stringProp name="data">{&quot;method&quot;:&quot;POST&quot;,&quot;resource&quot;:&quot;/buy/add&quot;,&quot;body&quot;:{&quot;valor&quot;:5.5}}</stringProp>
+          <stringProp name="data">{&quot;method&quot;:&quot;GET&quot;,&quot;resource&quot;:&quot;/calc/soma&quot;,&quot;body&quot;:{&quot;num1&quot;:5, &quot;num2&quot;: 0}}</stringProp>
+          <stringProp name="encodeclass">kg.apc.jmeter.samplers.UDPSampler</stringProp>
+          <stringProp name="bind_address"></stringProp>
+          <stringProp name="bind_port"></stringProp>
+        </kg.apc.jmeter.samplers.UDPSampler>
+        <hashTree/>
+        <kg.apc.jmeter.samplers.UDPSampler guiclass="kg.apc.jmeter.samplers.UDPSamplerGui" testclass="kg.apc.jmeter.samplers.UDPSampler" testname="UDP - Subtracao - POST" enabled="false">
+          <stringProp name="hostname">localhost</stringProp>
+          <stringProp name="port">9000</stringProp>
+          <boolProp name="waitresponse">true</boolProp>
+          <boolProp name="closechannel">false</boolProp>
+          <stringProp name="timeout">1000</stringProp>
+          <stringProp name="data">{&quot;method&quot;:&quot;POST&quot;,&quot;resource&quot;:&quot;/calc/sub&quot;,&quot;body&quot;:{&quot;num1&quot;:5, &quot;num2&quot;: 2}}</stringProp>
+          <stringProp name="encodeclass">kg.apc.jmeter.samplers.UDPSampler</stringProp>
+          <stringProp name="bind_address"></stringProp>
+          <stringProp name="bind_port"></stringProp>
+        </kg.apc.jmeter.samplers.UDPSampler>
+        <hashTree/>
+        <kg.apc.jmeter.samplers.UDPSampler guiclass="kg.apc.jmeter.samplers.UDPSamplerGui" testclass="kg.apc.jmeter.samplers.UDPSampler" testname="UDP - Divisão - PUT" enabled="true">
+          <stringProp name="hostname">localhost</stringProp>
+          <stringProp name="port">9000</stringProp>
+          <boolProp name="waitresponse">true</boolProp>
+          <boolProp name="closechannel">false</boolProp>
+          <stringProp name="timeout">1000</stringProp>
+          <stringProp name="data">{&quot;method&quot;:&quot;PUT&quot;,&quot;resource&quot;:&quot;/calc/div&quot;,&quot;body&quot;:{&quot;num1&quot;:5, &quot;num2&quot;: 0}}</stringProp>
+          <stringProp name="encodeclass">kg.apc.jmeter.samplers.UDPSampler</stringProp>
+          <stringProp name="bind_address"></stringProp>
+          <stringProp name="bind_port"></stringProp>
+        </kg.apc.jmeter.samplers.UDPSampler>
+        <hashTree/>
+        <kg.apc.jmeter.samplers.UDPSampler guiclass="kg.apc.jmeter.samplers.UDPSamplerGui" testclass="kg.apc.jmeter.samplers.UDPSampler" testname="UDP - Multiplicação - PATCH" enabled="false">
+          <stringProp name="hostname">localhost</stringProp>
+          <stringProp name="port">9000</stringProp>
+          <boolProp name="waitresponse">true</boolProp>
+          <boolProp name="closechannel">false</boolProp>
+          <stringProp name="timeout">1000</stringProp>
+          <stringProp name="data">{&quot;method&quot;:&quot;PATCH&quot;,&quot;resource&quot;:&quot;/calc/mult&quot;,&quot;body&quot;:{&quot;num1&quot;:5, &quot;num2&quot;: 2}}</stringProp>
+          <stringProp name="encodeclass">kg.apc.jmeter.samplers.UDPSampler</stringProp>
+          <stringProp name="bind_address"></stringProp>
+          <stringProp name="bind_port"></stringProp>
+        </kg.apc.jmeter.samplers.UDPSampler>
+        <hashTree/>
+        <kg.apc.jmeter.samplers.UDPSampler guiclass="kg.apc.jmeter.samplers.UDPSamplerGui" testclass="kg.apc.jmeter.samplers.UDPSampler" testname="UDP - SomaMem - POST" enabled="false">
+          <stringProp name="hostname">localhost</stringProp>
+          <stringProp name="port">9000</stringProp>
+          <boolProp name="waitresponse">true</boolProp>
+          <boolProp name="closechannel">false</boolProp>
+          <stringProp name="timeout">1000</stringProp>
+          <stringProp name="data">{&quot;method&quot;:&quot;POST&quot;,&quot;resource&quot;:&quot;/calc/somaMem&quot;,&quot;body&quot;:{&quot;num1&quot;:8}}</stringProp>
+          <stringProp name="encodeclass">kg.apc.jmeter.samplers.UDPSampler</stringProp>
+          <stringProp name="bind_address"></stringProp>
+          <stringProp name="bind_port"></stringProp>
+        </kg.apc.jmeter.samplers.UDPSampler>
+        <hashTree/>
+        <kg.apc.jmeter.samplers.UDPSampler guiclass="kg.apc.jmeter.samplers.UDPSamplerGui" testclass="kg.apc.jmeter.samplers.UDPSampler" testname="UDP - SubtracaoMem - PUT" enabled="false">
+          <stringProp name="hostname">localhost</stringProp>
+          <stringProp name="port">9000</stringProp>
+          <boolProp name="waitresponse">true</boolProp>
+          <boolProp name="closechannel">false</boolProp>
+          <stringProp name="timeout">1000</stringProp>
+          <stringProp name="data">{&quot;method&quot;:&quot;PUT&quot;,&quot;resource&quot;:&quot;/calc/subMem&quot;,&quot;body&quot;:{&quot;num1&quot;:5}}</stringProp>
+          <stringProp name="encodeclass">kg.apc.jmeter.samplers.UDPSampler</stringProp>
+          <stringProp name="bind_address"></stringProp>
+          <stringProp name="bind_port"></stringProp>
+        </kg.apc.jmeter.samplers.UDPSampler>
+        <hashTree/>
+        <kg.apc.jmeter.samplers.UDPSampler guiclass="kg.apc.jmeter.samplers.UDPSamplerGui" testclass="kg.apc.jmeter.samplers.UDPSampler" testname="UDP - DivisãoMem - DELETE" enabled="false">
+          <stringProp name="hostname">localhost</stringProp>
+          <stringProp name="port">9000</stringProp>
+          <boolProp name="waitresponse">true</boolProp>
+          <boolProp name="closechannel">false</boolProp>
+          <stringProp name="timeout">1000</stringProp>
+          <stringProp name="data">{&quot;method&quot;:&quot;DELETE&quot;,&quot;resource&quot;:&quot;/calc/divMem&quot;,&quot;body&quot;:{&quot;num1&quot;:5}}</stringProp>
+          <stringProp name="encodeclass">kg.apc.jmeter.samplers.UDPSampler</stringProp>
+          <stringProp name="bind_address"></stringProp>
+          <stringProp name="bind_port"></stringProp>
+        </kg.apc.jmeter.samplers.UDPSampler>
+        <hashTree/>
+        <kg.apc.jmeter.samplers.UDPSampler guiclass="kg.apc.jmeter.samplers.UDPSamplerGui" testclass="kg.apc.jmeter.samplers.UDPSampler" testname="UDP - MultiplicacaoMem - POST" enabled="false">
+          <stringProp name="hostname">localhost</stringProp>
+          <stringProp name="port">9000</stringProp>
+          <boolProp name="waitresponse">true</boolProp>
+          <boolProp name="closechannel">false</boolProp>
+          <stringProp name="timeout">1000</stringProp>
+          <stringProp name="data">{&quot;method&quot;:&quot;POST&quot;,&quot;resource&quot;:&quot;/calc/multMem&quot;,&quot;body&quot;:{&quot;num1&quot;:5}}</stringProp>
           <stringProp name="encodeclass">kg.apc.jmeter.samplers.UDPSampler</stringProp>
           <stringProp name="bind_address"></stringProp>
           <stringProp name="bind_port"></stringProp>
