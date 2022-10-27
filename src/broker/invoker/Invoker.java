@@ -7,9 +7,11 @@ import com.google.gson.JsonObject;
 
 import annotations.DeleteMapping;
 import annotations.GetMapping;
+import annotations.PatchMapping;
 import annotations.PostMapping;
 import annotations.PutMapping;
 import annotations.RequestMapping;
+import exceptions.InternalServerError;
 import exceptions.NotFoundError;
 import message.HTTPMessage;
 
@@ -31,7 +33,7 @@ public class Invoker {
 		}
 	}
 
-	public HTTPMessage invoke(HTTPMessage msg) throws NotFoundError{
+	public HTTPMessage invoke(HTTPMessage msg) throws NotFoundError, InternalServerError{
 		String httpMethod = msg.getMethod();
 		String resource = msg.getResource();
 
@@ -69,9 +71,16 @@ public class Invoker {
 						result = (JsonObject) method.invoke(clazz.getConstructor().newInstance(), msg.getBody());
 					}
 				}
+				else if(method.isAnnotationPresent(PatchMapping.class) && httpMethod.equals("PATCH")){
+					PatchMapping getAnnotation = method.getAnnotation(PatchMapping.class);
+					if(getAnnotation.route().equals(methodRoute)){
+						result = (JsonObject) method.invoke(clazz.getConstructor().newInstance(), msg.getBody());
+					}
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new InternalServerError();
 		}
 
 		if(result == null){
