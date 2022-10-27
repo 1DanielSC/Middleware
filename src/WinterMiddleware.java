@@ -55,7 +55,7 @@ public class WinterMiddleware {
 		}
 		
 	}
-	
+	/*
 	public static void main(String[] args) {
 		WinterMiddleware inter = new WinterMiddleware();
 
@@ -65,7 +65,8 @@ public class WinterMiddleware {
 		
 		inter.activateLogging();
 
-		inter.start(9000, "udp");
+		inter.start(9000, "tcp");
 	}
+	*/
 
 }
